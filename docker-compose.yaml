@@ -1,0 +1,52 @@
+version: '3'
+services:
+
+  feign-server:
+    build:
+      context: ./Eureka-Server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+
+  api-gateway:
+    build:
+      context: ./APIGatewayApp
+    ports:
+      - "8093:8093"
+    depends_on:
+      - feign-server
+      - ms-article
+      - ms-stock
+
+  config-server:
+    build:
+      context: ./config-server
+    ports:
+      - "8888:8888"
+
+  ms-article:
+    build:
+      context: ./MS-Article
+    ports:
+      - "8089:8089"
+    depends_on:
+      - feign-server
+      - config-server
+      - shared-entities-server
+
+  ms-stock:
+    build:
+      context: ./Ms-Stock
+    ports:
+      - "8090:8090"
+    depends_on:
+      - feign-server
+      - config-server
+      - shared-entities-server
+
+  shared-entities-server:
+    build:
+      context: ./shared_package
+    ports:
+      - "8082:8080"
