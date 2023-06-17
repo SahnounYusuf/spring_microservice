@@ -17,9 +17,8 @@ https.get(configUrl, (res) => {
   });
   res.on('end', () => {
     try {
-      const config = JSON.parse(rawData);
-      const { mongoURI, port } = config;
-      startServer(mongoURI, port);
+      const mongoURI = "mongodb+srv://theghostotaku:ehZnAWboQeqELkxj@cluster0.mkj1zxm.mongodb.net/?retryWrites=true&w=majority"
+      startServer(mongoURI, 3000);
     } catch (error) {
       console.error(error);
     }
