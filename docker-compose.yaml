@@ -1,5 +1,9 @@
-version: '3'
+version: '3.9'
 services:
+
+  shared-package:
+    build:
+      context: ./shared_package
 
   feign-server:
     build:
@@ -33,7 +37,7 @@ services:
     depends_on:
       - feign-server
       - config-server
-      - shared-entities-server
+      - shared-package
 
   ms-stock:
     build:
@@ -43,10 +47,4 @@ services:
     depends_on:
       - feign-server
       - config-server
-      - shared-entities-server
-
-  shared-entities-server:
-    build:
-      context: ./shared_package
-    ports:
-      - "8082:8080"
+      - shared-package
